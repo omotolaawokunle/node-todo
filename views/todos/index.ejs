@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Todos</title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+  <body>
+    <div class="mx-10 p-4">
+        <div class="flex items-center justify-between w-full">
+            <h1 class="text-2xl font-bold">Todos</h1>
+            <a href="/todos/create" class="bg-blue-500 text-white p-2 rounded-md">Create Todo</a>
+        </div>
+        <p>You have <%= todos.length %> todos</p>
+        <p>You have <%= todos.filter(todo => todo.status === 'pending').length %> pending todos</p>
+        <p>You have <%= todos.filter(todo => todo.status === 'completed').length %> completed todos</p>
+
+        <form action="/todos" method="get" class="flex items-center gap-2 mb-2">
+            <select name="status" id="status" class="border border-gray-300 rounded-md p-2">
+                <option value="pending" <%= status === 'pending' ? 'selected' : '' %>>Pending</option>
+                <option value="completed" <%= status === 'completed' ? 'selected' : '' %>>Completed</option>
+                <option value="" <%= status === '' ? 'selected' : '' %>>All</option>
+            </select>
+            <button type="submit" class="bg-blue-500 text-white p-2 rounded-md">Filter</button>
+        </form>
+        
+        <table class="w-full border border-gray-300 rounded-md">
+            <thead>
+                <tr class="border border-gray-300 rounded-md p-2">
+                    <th class="border border-gray-300 rounded-md p-2">Title</th>
+                    <th class="border border-gray-300 rounded-md p-2">Description</th>
+                    <th class="border border-gray-300 rounded-md p-2">Status</th>
+                    <th class="border border-gray-300 rounded-md p-2">Created At</th>
+                    <th class="border border-gray-300 rounded-md p-2">Completed At</th>
+                    <th class="border border-gray-300 rounded-md p-2">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% todos.forEach(todo => { %>
+                    <tr class="border border-gray-300 rounded-md p-2">
+                        <td class="border border-gray-300 rounded-md p-2 whitespace-normal"><%= todo.title %></td>
+                        <td class="border border-gray-300 rounded-md p-2 whitespace-normal"><%= todo.description %></td>
+                        <td class="border border-gray-300 rounded-md p-2 whitespace-normal"><%= todo.status.charAt(0).toUpperCase() + todo.status.slice(1) %></td>
+                        <td class="border border-gray-300 rounded-md p-2 whitespace-normal"><%= todo.createdAt.toLocaleDateString() %></td>
+                        <td class="border border-gray-300 rounded-md p-2 whitespace-normal"><%= todo.completedAt ? todo.completedAt.toLocaleDateString() : 'Not completed yet' %></td>
+                        <td class="border border-gray-300 rounded-md p-2 whitespace-normal">
+                            <div class="flex flex-col items-start gap-2">
+                                <form action="/todos/<%= todo.slug %>" method="post" class="<%= todo.status === 'completed' ? 'hidden' : '' %>">
+                                    <input type="hidden" name="status" value="completed">
+                                    <button type="submit" class="bg-green-500 text-white p-2 rounded-md">Complete</button>
+                                </form>
+                                <form action="/todos/<%= todo.slug %>" method="post" class="<%= todo.status === 'deleted' ? 'hidden' : '' %>">
+                                    <input type="hidden" name="status" value="deleted">
+                                    <button type="submit" class="bg-red-500 text-white p-2 rounded-md">Delete</button>
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
+                <% }); %>
+        </table>
+    </div>
+  </body>
+</html>
