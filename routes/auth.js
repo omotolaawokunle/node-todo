@@ -35,7 +35,7 @@ router.get("/login", isNotAuthenticated, function (req, res, next) {
     errors: {
       message:
         req.session?.messages?.message ||
-        req.session?.messages[0] ||
+        req.session?.messages?.[0] ||
         req.session?.messages ||
         "",
     },
