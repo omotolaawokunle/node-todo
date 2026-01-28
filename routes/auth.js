@@ -24,6 +24,9 @@ passport.deserializeUser((id, done) => {
   });
 });
 passport.use(new LocalStrategy(verifyPassword));
+router.get("/", isAuthenticated, function (req, res, next) {
+  res.redirect("/todos");
+});
 router.get("/login", isNotAuthenticated, function (req, res, next) {
   console.log(req.session?.messages);
   res.render("auth/login", {
