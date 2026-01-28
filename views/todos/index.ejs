@@ -22,7 +22,8 @@
             </select>
             <button type="submit" class="bg-blue-500 text-white p-2 rounded-md">Filter</button>
         </form>
-        
+        <span class="text-green-500 text-sm mb-2"><%= message ? message : '' %></span>
+        <span class="text-red-500 text-sm mb-2"><%= errors ? errors : '' %></span>
         <table class="w-full border border-gray-300 rounded-md">
             <thead>
                 <tr class="border border-gray-300 rounded-md p-2">

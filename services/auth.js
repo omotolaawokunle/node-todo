@@ -7,15 +7,18 @@ async function createUser(username, password) {
     username,
     password: hashPassword(password),
   });
+  console.log("User created successfully");
   return user;
 }
 
 async function verifyPassword(username, password, done) {
   const user = await User.findOne({ username });
   if (!user) {
+    console.log("Invalid username");
     return done(null, false, { message: "Invalid username or password" });
   }
   if (!user.verifyPassword(password)) {
+    console.log("Invalid password");
     return done(null, false, { message: "Invalid username or password" });
   }
   return done(null, user);

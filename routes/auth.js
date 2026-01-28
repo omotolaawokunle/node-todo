@@ -31,10 +31,13 @@ router.get("/", isAuthenticated, function (req, res, next) {
   res.redirect("/todos");
 });
 router.get("/login", isNotAuthenticated, function (req, res, next) {
-  console.log(req.session?.messages);
   res.render("auth/login", {
     errors: {
-      message: req.session?.messages?.message || req.session?.messages,
+      message:
+        req.session?.messages?.message ||
+        req.session?.messages[0] ||
+        req.session?.messages ||
+        "",
     },
   });
 });
