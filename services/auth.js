@@ -13,11 +13,9 @@ async function createUser(username, password) {
 async function verifyPassword(username, password, done) {
   const user = await User.findOne({ username });
   if (!user) {
-    console.log("Invalid username");
     return done(null, false, { message: "Invalid username or password" });
   }
   if (!user.verifyPassword(password)) {
-    console.log("Invalid password");
     return done(null, false, { message: "Invalid username or password" });
   }
   return done(null, user);

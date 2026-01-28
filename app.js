@@ -8,6 +8,7 @@ const mongoose = require("mongoose");
 const session = require("express-session");
 const passport = require("passport");
 const { isAuthenticated } = require("./middlewares/authMiddleware");
+const MongoStore = require("connect-mongo");
 
 dotenv.config();
 
@@ -47,6 +48,10 @@ app.use(
       httpOnly: true,
       maxAge: 24 * 60 * 60 * 1000,
     },
+    store: MongoStore.create({
+      mongoUrl: process.env.DB_URI,
+      touchAfter: 24 * 60 * 60,
+    }),
   }),
 );
 app.use(passport.initialize());
