@@ -29,6 +29,9 @@ var todosRouter = require('./routes/todos');
 var authRouter = require('./routes/auth');
 var app = express();
 
+// Trust proxy - CRITICAL for Render/Heroku/Railway/etc
+app.set('trust proxy', 1);
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
@@ -47,10 +50,14 @@ app.use(
       secure: process.env.NODE_ENV === "production",
       httpOnly: true,
       maxAge: 24 * 60 * 60 * 1000,
+      sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
     },
     store: MongoStore.create({
       mongoUrl: process.env.DB_URI,
       touchAfter: 24 * 3600,
+      crypto: {
+        secret: process.env.SESSION_SECRET
+      }
     }),
   }),
 );
