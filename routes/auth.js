@@ -5,7 +5,10 @@ const { verifyPassword } = require("../services/auth");
 const { register } = require("../controllers/authController");
 const LocalStrategy = require("passport-local");
 const User = require("../models/user");
-const { isNotAuthenticated } = require("../middlewares/authMiddleware");
+const {
+  isNotAuthenticated,
+  isAuthenticated,
+} = require("../middlewares/authMiddleware");
 
 passport.serializeUser((user, done) => {
   process.nextTick(() => {
