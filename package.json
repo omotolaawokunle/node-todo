@@ -18,19 +18,26 @@
     "todo",
     "app"
   ],
+  "type": "commonjs",
   "scripts": {
     "start": "node ./bin/www",
-    "dev": "npx @tailwindcss/cli -i ./public/stylesheets/app.css -o ./public/stylesheets/style.css --watch && node ./bin/www",
-    "build": "npx @tailwindcss/cli -i ./public/stylesheets/app.css -o ./public/stylesheets/style.css"
+    "dev": "npx @tailwindcss/cli -i ./public/stylesheets/app.css -o ./public/stylesheets/style.css && nodemon ./bin/www",
+    "build": "npx @tailwindcss/cli -i ./public/stylesheets/app.css -o ./public/stylesheets/style.css",
+    "watch": "npx @tailwindcss/cli -i ./public/stylesheets/app.css -o ./public/stylesheets/style.css --watch"
   },
   "dependencies": {
     "@tailwindcss/cli": "^4.1.18",
     "cookie-parser": "~1.4.4",
     "debug": "~2.6.9",
-    "ejs": "~2.6.1",
-    "express": "~4.16.1",
+    "dotenv": "^17.2.3",
+    "ejs": "^4.0.1",
+    "express": "^4.22.1",
+    "express-session": "^1.19.0",
     "http-errors": "~1.6.3",
-    "morgan": "~1.9.1",
+    "mongoose": "^9.1.5",
+    "morgan": "^1.10.1",
+    "passport": "^0.7.0",
+    "passport-local": "^1.0.0",
     "tailwindcss": "^4.1.18"
   }
 }
